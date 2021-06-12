@@ -22,6 +22,11 @@ app.config.update_config({'REQUEST_MAX_SIZE': 1000})
 @app.middleware("response")
 async def add_cache_tts_policy(_, response):
     response.headers["Cache-control"] = "must-revalidate"
+    response.headers["X - XSS - Protection"] = "1; mode=block"
+    response.headers["Content-Security-Policy"] = "frame-ancestors 'none'"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Referrer-Policy"] = "same-origin"
 
 
 @app.route("/")
@@ -29,8 +34,7 @@ async def add_cache_tts_policy(_, response):
 @app.route("/index")
 @app.route("/home")
 @app.route("/home.html")
-async def home_page(request):
-    print(request.ip)
+async def home_page(_):
     return html(env.get_template('index.html').render(active='index'))
 
 
@@ -52,7 +56,7 @@ async def contact_page(request):
             if isinstance(already_received, int):
                 if already_received <= 2:
                     already_received = "success"
-                elif already_received <= 10:
+                elif already_received <= 6:
                     already_received = "warning"
                 else:
                     already_received = "danger"

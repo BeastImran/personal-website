@@ -21,12 +21,15 @@ app.config.update_config({'REQUEST_MAX_SIZE': 1000})
 
 @app.middleware("response")
 async def add_cache_tts_policy(_, response):
-    response.headers["Cache-control"] = "must-revalidate"
-    response.headers["X - XSS - Protection"] = "1; mode=block"
-    response.headers["Content-Security-Policy"] = "frame-ancestors 'none'"
-    response.headers["X-Frame-Options"] = "DENY"
-    response.headers["X-Content-Type-Options"] = "nosniff"
-    response.headers["Referrer-Policy"] = "same-origin"
+    # response.headers["strict-transport-security"] = "max-age=63072000; includeSubDomains; preload"
+    response.headers["cache-control"] = "private, must-revalidate"
+    response.headers[
+        "content-security-policy"] = "script-src 'self'; object-src 'none'; connect-src 'self'; font-src 'self'; img-src 'self'; manifest-src 'self'; media-src 'self'; worker-src 'none';"
+    response.headers["referrer-policy"] = "strict-origin-when-cross-origin"
+    response.headers["x-content-type-options"] = "nosniff"
+    response.headers["x-frame-options"] = "SAMEORIGIN"
+    response.headers["x-xss-protection"] = "1; mode=block"
+    response.headers["access-control-allow-origin"] = "no"
 
 
 @app.route("/")
@@ -54,9 +57,9 @@ async def contact_page(request):
 
         if already_received:
             if isinstance(already_received, int):
-                if already_received <= 2:
+                if already_received <= 1:
                     already_received = "success"
-                elif already_received <= 6:
+                elif already_received <= 5:
                     already_received = "warning"
                 else:
                     already_received = "danger"

@@ -1,22 +1,15 @@
 from jinja2 import Environment, FileSystemLoader
 from sanic import Sanic, html
+from sanic.response import file
 
 from utils.contact_form import add_contact
 
-file_loader = FileSystemLoader('templates')
+file_loader = FileSystemLoader('templates/min/')
 env = Environment(loader=file_loader)
-
 app = Sanic("My First Sanic App")
-
-app.static(
-    "/static/",
-    "./static/",
-    name="static",
-)
-
-app.static('/favicon.ico', './static/favicon.ico')
-app.static('/personal_site.css.map', './static/css/personal_site.css.map')
-app.config.update_config({'REQUEST_MAX_SIZE': 1000})
+app.static("/static/", "./static/")
+app.static("/favicon.ico", "./static/favicon.ico")
+app.config.update_config({"REQUEST_MAX_SIZE": 1000})
 
 
 @app.middleware("response")
@@ -24,7 +17,7 @@ async def add_cache_tts_policy(_, response):
     # response.headers["strict-transport-security"] = "max-age=63072000; includeSubDomains; preload"
     response.headers["cache-control"] = "private, must-revalidate"
     response.headers[
-        "content-security-policy"] = "script-src 'self'; object-src 'none'; connect-src 'self'; font-src 'self'; img-src 'self'; manifest-src 'self'; media-src 'self'; worker-src 'none';"
+        "content-security-policy"] = "img-src 'self'; font-src 'self'; connect-src 'self'; media-src 'self'; object-src 'none'; prefetch-src 'self'; frame-src 'self' https://www.redditmedia.com/ https://www.google.com/; worker-src 'none'; form-action 'self';  script-src 'self';"
     response.headers["referrer-policy"] = "strict-origin-when-cross-origin"
     response.headers["x-content-type-options"] = "nosniff"
     response.headers["x-frame-options"] = "SAMEORIGIN"
@@ -33,16 +26,16 @@ async def add_cache_tts_policy(_, response):
 
 
 @app.route("/")
-@app.route("/index.html")
 @app.route("/index")
 @app.route("/home")
 @app.route("/home.html")
+@app.route("/index.html")
 async def home_page(_):
     return html(env.get_template('index.html').render(active='index'))
 
 
-@app.route("/resume.html")
 @app.route("/resume")
+@app.route("/resume.html")
 async def resume_page(_):
     return html(env.get_template('resume.html').render(active='resume'))
 
@@ -71,10 +64,21 @@ async def contact_page(request):
         return html(env.get_template('contact.html').render(active='contact'))
 
 
-@app.route("/activities.html")
 @app.route("/activities")
+@app.route("/activities.html")
 async def portfolio_page(_):
     return html(env.get_template('activities.html').render(active='activities'))
+
+
+@app.route("/sitemap")
+@app.route("/sitemap.xml")
+async def sitemap(_):
+    return await file('./templates/sitemap.xml')
+
+
+@app.route("/google1ae25284ecc16fa9.html")
+async def google_verification(_):
+    return await file('./templates/google1ae25284ecc16fa9.html')
 
 
 if __name__ == '__main__':

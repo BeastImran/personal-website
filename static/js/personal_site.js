@@ -1,72 +1,33 @@
-$('[data-toggle="collapsible-nav"]').on('click', function(e){
-    var target = ($(this).data('target'));
-    $('#' + target).toggleClass('show');
-});
+if (screen.width >= 992) {
+    document.getElementById("collapsible-nav").classList.add('show');
+} else {
+    document.getElementById("collapsible-nav").classList.remove('show');
+}
 
-$(document).ready(function(){
-    if(window.innerWidth >= 992) {
-        $('#collapsible-nav').addClass('show');  //Show navigation menu in bigger screens by default.
+document.getElementById("menu-btn").addEventListener("click", function() {
+    var element = document.getElementById("collapsible-nav");
+    if (element.classList) {
+        element.classList.toggle("show");
     } else {
-        $('#collapsible-nav').removeClass('show');
-    }
+      // For IE9
+      var classes = element.className.split(" ");
+      var i = classes.indexOf("show");
 
-    if ($('.hover-box').length) {
-        setHoverBoxPerspective();
+      if (i >= 0) classes.splice(i, 1);
+      else
+        classes.push("show");
+        element.className = classes.join(" ");
     }
 });
 
-$(window).resize(
-    function() {
-        if ($('.hover-box').length) {
-            setHoverBoxPerspective();
-        }
-    }
-);
-
-function setHoverBoxPerspective() {
-    $('.hover-box').css({
-        'perspective': function () {
-            return Math.max( $(this).width(), $(this).height() ) * 2 + 50;
-        }
-    });
-}
-
-
-var classNames = ['in-up', 'in-right', 'in-down', 'in-left', 'out-up', 'out-right', 'out-down', 'out-left']; // Animation classes.
-
-$('.hover-box').hover(
-    function (event) {
-        var direction = "up";
-        if(jQuery.fn.entry){ //Check if entry js file is loaded.
-            direction = $(this).entry({ e: event }); // Get mouse in direction.
-        }
-
-        $(this).removeClass(classNames.join(" ")); // Remove existing animation classes.
-        $(this).addClass("in-" + direction); //Add mouse in animation
-
-    }, 
-    
-    function (event) {
-
-        var direction = "up";
-        if(jQuery.fn.entry){
-            direction = $(this).entry({ e: event }); // Get mouse out direction.
-        }
-
-        $(this).removeClass(classNames.join(" "));
-        $(this).addClass("out-" + direction); //Add mouse out animation
-
-    }
-);
-
-function copyToClipboard() {
-  const el = document.createElement('textarea')
-  el.value = "Text copied!"
-  el.setAttribute('readonly', '')
-  el.style.position = 'absolute'
-  el.style.left = '-9999px'
-  document.body.appendChild(el)
-  el.select()
-  document.execCommand('copy')
-  document.body.removeChild(el)
-}
+document.getElementById("share").addEventListener("click", function() {
+  const el = document.createElement('textarea');
+  el.value = "Check out this amazing ❤ profile now! http://beastimran.com. BeastImran is really an amazing guy 🤩";
+  el.setAttribute('readonly', '');
+  el.style.position = 'absolute';
+  el.style.left = '-9999px';
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+});

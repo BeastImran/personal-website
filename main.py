@@ -24,8 +24,8 @@ async def js(body, headers=None):
 
 
 async def send_response(request, response):
-    referer = request.headers.get('referer', '')
-    if referer.startswith('http://beastimran.com/'):
+    host = request.headers.get('host', '')
+    if host == '' or (host == "beastimran.com" or host == "www.beastimran.com"):
         accept_encoding = request.headers.get("Accept-Encoding", "") or request.headers.get("accept-encoding", "")
 
         if ("gzip" not in accept_encoding.lower()) or (response.status < 200 or response.status >= 300 or "Content-Encoding" in response.headers):
@@ -41,8 +41,8 @@ async def send_response(request, response):
         response.headers["vary"] = "accept-encoding"
         response.headers["content-length"] = len(response.body)
         return response
-    else:
-        return redirect(to="http://beastimran.com/")
+
+    return redirect("http://beastimran.com/")
 
 
 file_loader = FileSystemLoader('templates/' + minify)
@@ -58,7 +58,7 @@ app.config.update_config({"REQUEST_MAX_SIZE": 1000})
 @app.get("/static/css/<css_file_name:path>")
 async def serve_css(request, css_file_name):
     if css_file_name.rpartition('/')[2] in css_file_names:
-        css_file = await open('./static/css/' + 'min/' + css_file_name.rpartition('/')[2] if '/min/' in css_file_name else '' + css_file_name)
+        css_file = await open('./static/css/' + ('min/' + css_file_name.rpartition('/')[2] if '/min/' in css_file_name else '' + css_file_name))
         content = await css_file.read()
         await css_file.close()
         return await send_response(request, await css(content))
@@ -68,7 +68,7 @@ async def serve_css(request, css_file_name):
 @app.get("/static/js/<js_file_name:path>")
 async def serve_js(request, js_file_name):
     if js_file_name.rpartition('/')[2] == "personal_site.js":
-        js_file = await open('./static/js/' + 'min/' + "personal_site.js" if '/min/' in js_file_name else "personal_site.js")
+        js_file = await open('./static/js/' + ('min/' + "personal_site.js" if '/min/' in js_file_name else "personal_site.js"))
         content = await js_file.read()
         await js_file.close()
         return await send_response(request, await js(content))
@@ -80,7 +80,7 @@ async def add_cache_tts_policy(_, response):
     # response.headers["strict-transport-security"] = "max-age=63072000; includeSubDomains; preload"
     response.headers["cache-control"] = "private, must-revalidate"
     response.headers[
-        "content-security-policy"] = "img-src 'self'; font-src 'self'; connect-src 'self'; media-src 'self'; object-src 'none'; prefetch-src 'self'; frame-src 'self' https://www.redditmedia.com/ https://www.google.com/; worker-src 'none'; form-action 'self';  script-src 'self';"
+        "content-security-policy"] = "img-src 'self' http://beastimran.com http://www.beastimran.com; font-src 'self'; connect-src 'self'; media-src 'self' http://beastimran.com http://www.beastimran.com; object-src 'none'; prefetch-src 'self'; frame-src 'self' https://www.redditmedia.com/ https://www.google.com/; worker-src 'none'; form-action 'self';  script-src 'self' http://beastimran.com http://www.beastimran.com;"
     response.headers["referrer-policy"] = "strict-origin-when-cross-origin"
     response.headers["x-content-type-options"] = "nosniff"
     response.headers["x-frame-options"] = "SAMEORIGIN"

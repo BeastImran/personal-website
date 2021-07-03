@@ -33,7 +33,7 @@ In frontend and backend, these technologies has been used:
 
 5) [CPython3.8](https://www.python.org/downloads/release/python-385/)
    * humans know and speaks it 😉 .
-6) [Sanic web framework](http://sanicframework.org/)
+6) [Sanic web framework](http://sanicframework.org/en/)
    * Asynchronous web framework.
    * Written to go fast ⚡, as they say.
 7) [aiosqlite](https://pypi.org/project/aiosqlite/)
@@ -45,7 +45,7 @@ In frontend and backend, these technologies has been used:
 
 When this website is configured to run to it's full potential (by setting the workers to max a processor allows), it is capable of handling many thousands of requests per second.
 
-I have an `Intel 9th gen i7 9750H 6 core 12 logical cores` processor which allows a max of `12 workers`. Running the website `locally` with `workers set to 12`, it was able to handle approximately `4500+` requests per second 🤯. Shocking right! All thanks to the [Sanic web framework](http://sanicframework.org/). My server allows only one worker (single core), so, it's capable of handling approximately 1000 requests per second.
+I have an `Intel 9th gen i7 9750H 6 core 12 logical cores` processor which allows a max of `12 workers`. Running the website `locally` with `workers set to 12`, it was able to handle approximately `4500+` requests per second 🤯. Shocking right! All thanks to the [Sanic web framework](http://sanicframework.org/en/). My server allows only one worker (single core), so, it's capable of handling approximately 1000 requests per second.
 
 
 # Notes

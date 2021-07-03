@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {% if 'index' == active %}
+    <link rel="canonical" href="{{ domain }}/"/>
     <title>I'm Shaik Imran (BeastImran)</title>
-    <meta name="description" content="This website hosts BeastImran's details, projects, achievements, resume etc 🙂.">
+    <meta name="description"
+          content="I do things that address, solve and simplify people’s lives 🙂. I'm a student interested in every aspect of the software industry and very keen to dive deep into software technologies, frameworks and tools of my interest.">
     <script type="application/ld+json">
         [
             {
@@ -44,7 +46,7 @@
                 "@type": "Person",
                 "name": "BeastImran",
                 "url": "http://beastimran.com/",
-                "image": "http://www.beastimran.com/img/BeastImran.jpg",
+                "image": "http://www.beastimran.com/static/images/BeastImran.jpg",
                 "birthPlace": "India",
                 "gender": "Male",
                 "email": "imsalmanran789@gmail.com",
@@ -58,8 +60,10 @@
                 "sameAs": [
                     "https://t.me/beastimran",
                     "https://github.com/beastimran",
-                    "https://mobile.twitter.com/realbeastimran",
-                    "https://quora.com/profile/BeastImran"
+                    "https://twitter.com/realbeastimran",
+                    "https://quora.com/profile/BeastImran",
+                    "https://beastimran.medium.com/",
+                    "https://www.linkedin.com/in/shaik-imran-3a550a19b/"
                 ],
                 "jobTitle": "Student"
             },
@@ -97,26 +101,26 @@
     </script>
     <link rel="stylesheet" href="{{ css['skills_css'] }}">
     {% elif 'resume' == active %}
+    <link rel="canonical" href="{{ domain }}/resume"/>
     <title>Resume. My online resume page has my skills, education, works and other stuff.</title>
     <meta name="description" content="Resume. My online resume page has my skills, education, works and other stuff.">
     <link rel="stylesheet" href="{{ css['skills_css'] }}">
 
     {% elif 'activities' == active %}
-    <title>Activities. Find out most my activities here like my posts, raised issues, published contents etc.</title>
+    <link rel="canonical" href="{{ domain }}/activities"/>
+    <title>Activities. Find out most my activities like my posts, raised issues, published contents, etc here.</title>
     <link rel="stylesheet" href="{{ css['blog_css'] }}">
     <meta name="description" content="Activities. Find out most my activities here like my posts, raised issues, published contents etc.">
 
     {% elif 'contact' == active %}
+    <link rel="canonical" href="{{ domain }}/contact"/>
     <title>Contact. Get in touch with me if you want to.</title>
     <link rel="stylesheet" href="{{ css['form_css'] }}">
     <meta name="description" content="Contact. Use this page if you want to get in touch with me.">
 
     {% endif %}
-
     <link rel="stylesheet" href="{{ css['main_css'] }}">
-    <meta name="description" content="This is my (BeastImran) personal website which hosts my projects, details, achievements, resume etc 🙂. Please, feel free to roam
-          around and know about me and my work 😉. Got anything to say, contact me with the given social links 🙂">
-    <link rel="canonical" href="http://beastimran.com/"/>
+
 </head>
 <body>
 {% include 'full_nav.html' %}

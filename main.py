@@ -6,7 +6,7 @@ from jinja2 import Environment, FileSystemLoader
 from sanic import Sanic, html, HTTPResponse
 from sanic.response import file, empty, redirect
 
-from paths import paths, minify
+from paths import paths, minify, domain, www_domain, only_domain
 from utils.contact_form import add_contact
 
 html_paths = paths['html']
@@ -25,7 +25,8 @@ async def js(body, headers=None):
 
 async def send_response(request, response):
     host = request.headers.get('host', '')
-    if host == '' or (host == "beastimran.com" or host == "www.beastimran.com"):
+
+    if host == '' or (host == only_domain or host == www_domain):
         accept_encoding = request.headers.get("Accept-Encoding", "") or request.headers.get("accept-encoding", "")
 
         if ("gzip" not in accept_encoding.lower()) or (response.status < 200 or response.status >= 300 or "Content-Encoding" in response.headers):
@@ -51,8 +52,9 @@ app = Sanic("BeastImran.com")
 app.static("/static/videos/", "./static/videos/", use_content_range=True)
 app.static("/static/images/", "./static/images/")
 app.static("/static/documents/", "./static/documents/")
+# app.static("/static/fonts/", "./static/fonts/")
 app.static("/favicon.ico", "./static/favicon.ico")
-app.config.update_config({"REQUEST_MAX_SIZE": 1000})
+app.config.update_config({"REQUEST_MAX_SIZE": 9000})
 
 
 @app.get("/static/css/<css_file_name:path>")
@@ -78,7 +80,7 @@ async def serve_js(request, js_file_name):
 @app.middleware("response")
 async def add_cache_tts_policy(_, response):
     # response.headers["strict-transport-security"] = "max-age=63072000; includeSubDomains; preload"
-    response.headers["cache-control"] = "private, must-revalidate"
+    response.headers["cache-control"] = "private, must-revalidate, max-age=2592000"
     response.headers[
         "content-security-policy"] = "img-src 'self' http://beastimran.com http://www.beastimran.com; font-src 'self'; connect-src 'self'; media-src 'self' http://beastimran.com http://www.beastimran.com; object-src 'none'; prefetch-src 'self'; frame-src 'self' https://www.redditmedia.com/ https://www.google.com/; worker-src 'none'; form-action 'self';  script-src 'self' http://beastimran.com http://www.beastimran.com;"
     response.headers["referrer-policy"] = "strict-origin-when-cross-origin"
@@ -86,6 +88,13 @@ async def add_cache_tts_policy(_, response):
     response.headers["x-frame-options"] = "SAMEORIGIN"
     response.headers["x-xss-protection"] = "1; mode=block"
     response.headers["access-control-allow-origin"] = "no"
+
+
+@app.route('/static/fonts/<font_name:string>')
+async def serve_fonts(_, font_name):
+    if font_name == 'OpenSans-Regular.woff2':
+        return await file(f'./static/fonts/{font_name}')
+    return empty()
 
 
 @app.route("/")
@@ -96,7 +105,7 @@ async def add_cache_tts_policy(_, response):
 async def home_page(request):
     return await send_response(request=request, response=html(
         env.get_template('index.html').render(active='index', css=paths['css'], js=paths['js'], images_path=paths['images'],
-                                              doc_path=paths['documents'], videos_path=paths['videos'])))
+                                              doc_path=paths['documents'], videos_path=paths['videos'], domain=domain)))
 
 
 @app.route("/resume")
@@ -104,7 +113,7 @@ async def home_page(request):
 async def resume_page(request):
     return await send_response(request=request, response=html(
         env.get_template('resume.html').render(active='resume', css=paths['css'], js=paths['js'], images_path=paths['images'],
-                                               videos_path=paths['videos'])))
+                                               videos_path=paths['videos'], domain=domain)))
 
 
 @app.route("/contacts.html", methods=["GET", "POST"])
@@ -127,16 +136,16 @@ async def contact_page(request):
             return await send_response(request=request, response=html(
                 env.get_template('contact.html').render(active='contact', already_received=already_received, css=paths['css'], js=paths['js'],
                                                         images_path=paths['images'],
-                                                        videos_path=paths['videos'])))
+                                                        videos_path=paths['videos'], domain=domain)))
         else:
             return await send_response(request=request, response=html(
                 env.get_template('contact.html').render(active='contact', already_received='invalid-data', css=paths['css'], js=paths['js'],
                                                         images_path=paths['images'],
-                                                        videos_path=paths['videos'])))
+                                                        videos_path=paths['videos'], domain=domain)))
     else:
         return await send_response(request=request, response=html(
             env.get_template('contact.html').render(active='contact', css=paths['css'], js=paths['js'], images_path=paths['images'],
-                                                    videos_path=paths['videos'])))
+                                                    videos_path=paths['videos'], domain=domain)))
 
 
 @app.route("/activities")
@@ -144,7 +153,7 @@ async def contact_page(request):
 async def portfolio_page(request):
     return await send_response(request=request, response=html(
         env.get_template("activities.html").render(active='activities', css=paths['css'], js=paths['js'], images_path=paths['images'],
-                                                   videos_path=paths['videos'])))
+                                                   videos_path=paths['videos'], domain=domain)))
 
 
 @app.route("/sitemap")
@@ -156,6 +165,14 @@ async def sitemap(_):
 @app.route("/google1ae25284ecc16fa9.html")
 async def google_verification(_):
     return await file('google1ae25284ecc16fa9.html')
+
+
+@app.route("/robot")
+@app.route("/robots")
+@app.route("/robots.txt")
+@app.route("/robots.html")
+async def robots_txt(_):
+    return await file('robots.txt')
 
 
 if __name__ == '__main__':

@@ -58,7 +58,7 @@ app.config.update_config({"REQUEST_MAX_SIZE": 9000})
 
 @app.get(f"/static/documents/{minify[1:]}<doc_file_name:path>")
 async def serve_resume(_, doc_file_name):
-    if doc_file_name == "Shaik Imran's Resume.pdf":
+    if doc_file_name == "Shaik-Imran's-Resume.pdf":
         return await file('./static/documents/' + doc_file_name)
     return empty(status=404)
 

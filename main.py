@@ -5,7 +5,7 @@ from io import BytesIO as IO
 from aiofiles import open
 from jinja2 import Environment, FileSystemLoader
 from sanic import Sanic, html, HTTPResponse
-from sanic.response import file, empty, redirect, file_stream
+from sanic.response import file, empty, file_stream
 
 from paths import paths, minify, domain, www_domain, only_domain
 from utils.contact_form import add_contact
@@ -14,6 +14,11 @@ html_paths = paths['html']
 css_file_names = tuple([file_name.rpartition('/')[2] for file_name in paths["css"].values()])
 img_file_names = tuple(*[files for (_, _, files) in os.walk('./static/images/')])
 vid_file_names = tuple(*[files for (_, _, files) in os.walk('./static/videos/')])
+
+
+async def authentic_domain(request):
+    host = request.headers.get('host', '')
+    return host == '' or (host == only_domain or host == www_domain)
 
 
 async def css(body, headers=None):
@@ -27,9 +32,7 @@ async def js(body, headers=None):
 
 
 async def send_response(request, response):
-    host = request.headers.get('host', '')
-
-    if host == '' or (host == only_domain or host == www_domain):
+    if await authentic_domain(request):
         accept_encoding = request.headers.get("Accept-Encoding", "") or request.headers.get("accept-encoding", "")
 
         if ("gzip" not in accept_encoding.lower()) or (response.status < 200 or response.status >= 300 or "Content-Encoding" in response.headers):
@@ -46,7 +49,8 @@ async def send_response(request, response):
         response.headers["content-length"] = len(response.body)
         return response
 
-    return redirect("http://beastimran.com/")
+    return html(
+        "<h1>This domain is being used to impersonate <a href=\"http://beastimran.com\">beastimran.com</a>. Please report this domain if necessary to respected authority.</h1>")
 
 
 file_loader = FileSystemLoader('templates/' + minify)
@@ -64,22 +68,22 @@ async def serve_resume(_, doc_file_name):
 
 
 @app.get("/static/videos/<vid_file_name:path>")
-async def serve_videos(_, vid_file_name):
-    if vid_file_name in vid_file_names:
+async def serve_videos(request, vid_file_name):
+    if vid_file_name in vid_file_names and await authentic_domain(request):
         return await file_stream('./static/videos/' + vid_file_name)
     return empty(status=404)
 
 
 @app.get("/static/images/<img_file_name:path>")
-async def serve_img(_, img_file_name):
-    if img_file_name in img_file_names:
+async def serve_img(request, img_file_name):
+    if img_file_name in img_file_names and await authentic_domain(request):
         return await file('./static/images/' + img_file_name)
     return empty(status=404)
 
 
 @app.get(f"/static/css/{minify[1:]}<css_file_name:path>")
 async def serve_css(request, css_file_name):
-    if css_file_name in css_file_names:
+    if css_file_name in css_file_names and await authentic_domain(request):
         css_file = await open('./static/css/' + (('min/' + css_file_name.rpartition('/')[2]) if 'min/' in css_file_name else '' + css_file_name))
         content = await css_file.read()
         await css_file.close()
@@ -90,7 +94,7 @@ async def serve_css(request, css_file_name):
 
 @app.get(f"/static/js/{minify[1:]}<js_file_name:path>")
 async def serve_js(request, js_file_name):
-    if js_file_name == "personal_site.js":
+    if js_file_name == "personal_site.js" and await authentic_domain(request):
         js_file = await open('./static/js/' + ("min/personal_site.js" if 'min/' in js_file_name else "personal_site.js"), encoding="utf8")
         content = await js_file.read()
         await js_file.close()
@@ -118,8 +122,8 @@ async def add_cache_tts_policy(_, response):
 
 
 @app.route('/static/fonts/<font_name:string>')
-async def serve_fonts(_, font_name):
-    if font_name == 'OpenSans-Regular.woff2':
+async def serve_fonts(request, font_name):
+    if font_name == 'OpenSans-Regular.woff2' and await authentic_domain(request):
         return await file(f'./static/fonts/{font_name}')
     return empty(status=404)
 

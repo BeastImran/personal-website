@@ -1,16 +1,19 @@
 import gzip
+import os
 from io import BytesIO as IO
 
 from aiofiles import open
 from jinja2 import Environment, FileSystemLoader
 from sanic import Sanic, html, HTTPResponse
-from sanic.response import file, empty, redirect
+from sanic.response import file, empty, redirect, file_stream
 
 from paths import paths, minify, domain, www_domain, only_domain
 from utils.contact_form import add_contact
 
 html_paths = paths['html']
 css_file_names = tuple([file_name.rpartition('/')[2] for file_name in paths["css"].values()])
+img_file_names = tuple(*[files for (_, _, files) in os.walk('./static/images/')])
+vid_file_names = tuple(*[files for (_, _, files) in os.walk('./static/videos/')])
 
 
 async def css(body, headers=None):
@@ -49,32 +52,54 @@ async def send_response(request, response):
 file_loader = FileSystemLoader('templates/' + minify)
 env = Environment(loader=file_loader)
 app = Sanic("BeastImran.com")
-app.static("/static/videos/", "./static/videos/", use_content_range=True)
-app.static("/static/images/", "./static/images/")
-app.static("/static/documents/", "./static/documents/")
-# app.static("/static/fonts/", "./static/fonts/")
 app.static("/favicon.ico", "./static/favicon.ico")
 app.config.update_config({"REQUEST_MAX_SIZE": 9000})
 
 
-@app.get("/static/css/<css_file_name:path>")
+@app.get(f"/static/documents/{minify[1:]}<doc_file_name:path>")
+async def serve_resume(_, doc_file_name):
+    if doc_file_name == "Shaik Imran's Resume.pdf":
+        return await file('./static/documents/' + doc_file_name)
+    return empty(status=404)
+
+
+@app.get("/static/videos/<vid_file_name:path>")
+async def serve_videos(_, vid_file_name):
+    if vid_file_name in vid_file_names:
+        return await file_stream('./static/videos/' + vid_file_name)
+    return empty(status=404)
+
+
+@app.get("/static/images/<img_file_name:path>")
+async def serve_img(_, img_file_name):
+    if img_file_name in img_file_names:
+        return await file('./static/images/' + img_file_name)
+    return empty(status=404)
+
+
+@app.get(f"/static/css/{minify[1:]}<css_file_name:path>")
 async def serve_css(request, css_file_name):
-    if css_file_name.rpartition('/')[2] in css_file_names:
-        css_file = await open('./static/css/' + ('min/' + css_file_name.rpartition('/')[2] if '/min/' in css_file_name else '' + css_file_name))
+    if css_file_name in css_file_names:
+        css_file = await open('./static/css/' + (('min/' + css_file_name.rpartition('/')[2]) if 'min/' in css_file_name else '' + css_file_name))
         content = await css_file.read()
         await css_file.close()
         return await send_response(request, await css(content))
-    return empty()
+
+    return empty(status=404)
 
 
-@app.get("/static/js/<js_file_name:path>")
+@app.get(f"/static/js/{minify[1:]}<js_file_name:path>")
 async def serve_js(request, js_file_name):
-    if js_file_name.rpartition('/')[2] == "personal_site.js":
-        js_file = await open('./static/js/' + ('min/' + "personal_site.js" if '/min/' in js_file_name else "personal_site.js"))
+    if js_file_name == "personal_site.js":
+        js_file = await open('./static/js/' + ("min/personal_site.js" if 'min/' in js_file_name else "personal_site.js"), encoding="utf8")
         content = await js_file.read()
         await js_file.close()
         return await send_response(request, await js(content))
-    return empty()
+
+    return empty(status=404)
+
+
+sources = f"{domain} {www_domain}"
 
 
 @app.middleware("response")
@@ -82,9 +107,11 @@ async def add_cache_tts_policy(_, response):
     # response.headers["strict-transport-security"] = "max-age=63072000; includeSubDomains; preload"
     response.headers["cache-control"] = "private, must-revalidate, max-age=2592000"
     response.headers[
-        "content-security-policy"] = "img-src 'self' http://beastimran.com http://www.beastimran.com; font-src 'self'; connect-src 'self'; media-src 'self' http://beastimran.com http://www.beastimran.com; object-src 'none'; prefetch-src 'self'; frame-src 'self' https://www.redditmedia.com/ https://www.google.com/; worker-src 'none'; form-action 'self';  script-src 'self' http://beastimran.com http://www.beastimran.com;"
+        "content-security-policy"] = f"img-src {sources}; font-src  {sources}; connect-src {sources}; media-src {sources}; object-src 'none'; prefetch-src " \
+                                     f"{sources}; frame-src {sources} https://www.redditmedia.com/ https://www.google.com/; worker-src 'none'; form-action " \
+                                     f" {sources}; script-src {sources}"
     response.headers["referrer-policy"] = "strict-origin-when-cross-origin"
-    response.headers["x-content-type-options"] = "nosniff"
+    # response.headers["x-content-type-options"] = "nosniff"
     response.headers["x-frame-options"] = "SAMEORIGIN"
     response.headers["x-xss-protection"] = "1; mode=block"
     response.headers["access-control-allow-origin"] = "no"
@@ -94,7 +121,7 @@ async def add_cache_tts_policy(_, response):
 async def serve_fonts(_, font_name):
     if font_name == 'OpenSans-Regular.woff2':
         return await file(f'./static/fonts/{font_name}')
-    return empty()
+    return empty(status=404)
 
 
 @app.route("/")

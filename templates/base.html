@@ -5,10 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {% if 'index' == active %}
+
     <link rel="canonical" href="{{ domain }}/"/>
     <title>I'm Shaik Imran (BeastImran)</title>
     <meta name="description"
           content="I do things that address, solve and simplify people’s lives 🙂. I'm a student interested in every aspect of the software industry and very keen to dive deep into software technologies, frameworks and tools of my interest.">
+
+    {% elif 'resume' == active %}
+
+    <link rel="canonical" href="{{ domain }}/resume"/>
+    <title>Resume. My online resume page has my skills, education, works and other stuff.</title>
+    <meta name="description" content="Resume. My online resume page has my skills, education, works and other stuff.">
+
+    {% elif 'activities' == active %}
+    <link rel="canonical" href="{{ domain }}/activities"/>
+    <title>Activities. Find out most my activities like my posts, raised issues, published contents, etc here.</title>
+    <meta name="description" content="Activities. Find out most my activities here like my posts, raised issues, published contents etc.">
+
+    {% elif 'contact' == active %}
+    <link rel="canonical" href="{{ domain }}/contact"/>
+    <title>Contact. Get in touch with me if you want to.</title>
+    <meta name="description" content="Contact. Use this page if you want to get in touch with me. Probably you should ping me in telegram.">
+
+    {% endif %}
+    <link rel="stylesheet" href="{{ css['main_css'] }}">
     <script type="application/ld+json">
         [
             {
@@ -73,10 +93,10 @@
                 "mainEntity": [
                     {
                         "@type": "Question",
-                        "name": "Who am I?",
+                        "name": "Who is beastimran?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Student interested in every aspect of the software industry and very keen to dive deep into software technologies, frameworks and tools of my interest 🙂. At present, I am doing my personal projects, taking courses, classes etc 😄"
+                            "text": "I'm Shaik Imran, a student interested in every aspect of the software industry and very keen to dive deep into software technologies, frameworks and tools of my interest 🙂. At present, I am doing my personal projects, taking courses, classes etc 😄"
                         }
                     },
                     {
@@ -99,27 +119,76 @@
             }
         ]
     </script>
-    <link rel="stylesheet" href="{{ css['skills_css'] }}">
-    {% elif 'resume' == active %}
-    <link rel="canonical" href="{{ domain }}/resume"/>
-    <title>Resume. My online resume page has my skills, education, works and other stuff.</title>
-    <meta name="description" content="Resume. My online resume page has my skills, education, works and other stuff.">
-    <link rel="stylesheet" href="{{ css['skills_css'] }}">
 
-    {% elif 'activities' == active %}
-    <link rel="canonical" href="{{ domain }}/activities"/>
-    <title>Activities. Find out most my activities like my posts, raised issues, published contents, etc here.</title>
-    <link rel="stylesheet" href="{{ css['blog_css'] }}">
-    <meta name="description" content="Activities. Find out most my activities here like my posts, raised issues, published contents etc.">
+    <meta property="og:title" content="BeastImran Twitter account">
+    <meta property="og:site_name" content="Twitter">
+    <meta property="og:url" content="https://twitter.com/realbeastimran">
+    <meta property="og:description" content="This is my Twitter profile. realbeastimran is by Twitter handle.">
+    <meta property="og:type" content="profile">
+    <meta property="og:image" content="https://pbs.twimg.com/profile_images/1398505469824487425/i-uYdTgs_400x400.jpg">
 
-    {% elif 'contact' == active %}
-    <link rel="canonical" href="{{ domain }}/contact"/>
-    <title>Contact. Get in touch with me if you want to.</title>
-    <link rel="stylesheet" href="{{ css['form_css'] }}">
-    <meta name="description" content="Contact. Use this page if you want to get in touch with me.">
+    <meta property="og:title" content="BeastImran Telegram account">
+    <meta property="og:site_name" content="Telegram">
+    <meta property="og:url" content="https://t.me/beastimran">
+    <meta property="og:description" content="This is my Telegram account. I am mostly available on telegram, so feel free to ping me.">
+    <meta property="og:type" content="profile">
+    <meta property="og:image" content="https://cdn5.telesco.pe/file/o24SGK4FI02c31w_SOJllB_f1vo60dgASJ9Y_1xsBNKfpdFT0zerD6gTMQkGGXFDE0u8BGHxT8IF00StdS3w8a-iOaq_i4L7aVJqAoNQD-Lu40rHWEUmNsIddfvaU1Paz9UxV75rewx_zzDlyKcXl_7XWHj42Bld3wscHeqXu7yyEBpDRZdX3fvrqpLMEnDq041I2SAvymuM7OKcuZXXUKXjgEAKk1laQ-JB9pp9tzOiGnVoGb8qmV_kjdZLmdAqzTGvrZ8UpASdz5o7NfSQNk7YiWLb1gy-UjFAZoXUGJKzDFVqUrYMo4Np1JDtaH6z4TfDkV0U4JWS-XfymhAAzQ.jpg">
 
-    {% endif %}
-    <link rel="stylesheet" href="{{ css['main_css'] }}">
+    <meta property="og:title" content="BeastImran GitHub account">
+    <meta property="og:site_name" content="GitHub">
+    <meta property="og:url" content="https://github.com/beastimran">
+    <meta property="og:description" content="This is my GitHub profile. Most of my projects live here. I hope they come handy">
+    <meta property="og:type" content="profile">
+    <meta property="og:image" content="https://avatars.githubusercontent.com/u/74952943">
+
+    <meta property="og:title" content="BeastImran Reddit account">
+    <meta property="og:site_name" content="Reddit">
+    <meta property="og:url" content="https://www.reddit.com/user/beastimran/">
+    <meta property="og:description" content="This is my Reddit account. I some time use it.">
+    <meta property="og:type" content="profile">
+    <meta property="og:image" content="https://i.redd.it/snoovatar/snoovatars/4b3a00f5-87ce-4758-b3b6-d0e10519d7e8.png">
+
+    <meta property="og:title" content="BeastImran Medium account">
+    <meta property="og:site_name" content="Medium">
+    <meta property="og:url" content="https://beastimran.medium.com/">
+    <meta property="og:description" content="This is my Medium account. Medium is really an awesome website and I publish some really useful articles here.">
+    <meta property="og:type" content="profile">
+    <meta property="og:image" content="https://miro.medium.com/fit/c/262/262/1*6ZjtpxL2InNoHCXg_sO2aQ.jpeg">
+
+    <meta property="og:title" content="BeastImran PyPi account">
+    <meta property="og:site_name" content="PyPi">
+    <meta property="og:url" content="https://pypi.org/user/BeastImran/">
+    <meta property="og:description" content="This is my official PyPi account. PyPi is really an awesome website and I publish some really useful projects/utilities/tools here. Check them out.">
+    <meta property="og:type" content="profile">
+    <meta property="og:image" content="https://warehouse-camo.ingress.cmh1.psfhosted.org/1d2e3e107caf963981c7da780d41456356110d41/68747470733a2f2f7365637572652e67726176617461722e636f6d2f6176617461722f66373034383635373364306262303233316630633666393634653438313534383f73697a653d323235">
+
+    <meta property="og:title" content="BeastImran Linkedin account">
+    <meta property="og:site_name" content="Linkedin">
+    <meta property="og:url" content="https://in.linkedin.com/in/beastimran">
+    <meta property="og:description" content="This is my official Linkedin profile. I don't use it much but yeah, check it out if you want to know about me.">
+    <meta property="og:type" content="profile">
+    <meta property="og:image" content="http://beastimran.com/static/images/BeastImran.jpg">
+
+    <meta property="og:title" content="BeastImran Telegramic account">
+    <meta property="og:site_name" content="Telegramic">
+    <meta property="og:url" content="https://telegramic.org/profile/id144010/">
+    <meta property="og:description" content="This is my Telegramic profile. Check it out if you want to know more about my telegram bots.">
+    <meta property="og:type" content="profile">
+    <meta property="og:image" content="https://telegramic.org/media/avatars/users/988d2b1e0b7acfa80206.jpg">
+
+    <meta property="og:title" content="BeastImran Telegramic account">
+    <meta property="og:site_name" content="Telegramic">
+    <meta property="og:url" content="https://telegramic.org/profile/id144010/">
+    <meta property="og:description" content="This is my Telegramic profile. Check it out if you want to know more about my telegram bots.">
+    <meta property="og:type" content="profile">
+    <meta property="og:image" content="https://telegramic.org/media/avatars/users/988d2b1e0b7acfa80206.jpg">
+
+    <meta property="og:title" content="BeastImran Bots Archive account">
+    <meta property="og:site_name" content="BotsArchive">
+    <meta property="og:url" content="https://www.botsarchive.com/dev.html?id=167">
+    <meta property="og:description" content="This is my Bots Archive profile. Check it out if you want to know more about my telegram bots.">
+    <meta property="og:type" content="profile">
+    <meta property="og:image" content="http://beastimran.com/static/images/BeastImran.jpg">
 
 </head>
 <body>

@@ -12,9 +12,6 @@ paths = {
     },
     "css": {
         "main_css": domain + '/static/css' + minify + 'personal_site.css',
-        "blog_css": domain + '/static/css' + minify + 'personal_site_blog.css',
-        "form_css": domain + '/static/css' + minify + 'personal_site_form.css',
-        "skills_css": domain + '/static/css' + minify + 'personal_site_skills.css',
     },
     "js": {
         "main_js": domain + '/static/js' + minify + 'personal_site.js',

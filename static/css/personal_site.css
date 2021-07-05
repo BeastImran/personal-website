@@ -49,6 +49,7 @@
 
 @font-face {
     font-family: "OpenSans";
+    font-display: swap;
     src:url("/static/fonts/OpenSans-Regular.woff2");
 }
 
@@ -7404,7 +7405,7 @@ aside .profile-img-wrapper {
     transform: scale(1.1); }
 
 aside .profile-name {
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 600;
   text-align: center;
   line-height: 30px;
@@ -7445,12 +7446,12 @@ aside .widget {
   text-align: center;
   margin-bottom: 28px; }
   aside .widget .widget-title {
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 500;
     text-transform: uppercase;
     margin-bottom: 10px; }
   aside .widget .widget-content {
-    font-size: 13px; }
+    font-size: 12px; }
     aside .widget .widget-content p {
       margin-bottom: 5px; }
       aside .widget .widget-content p:last-of-type {
@@ -7522,12 +7523,12 @@ header {
 .collapsible-nav {
   display: flex;
   align-items: center;
-  width: 50px;
+  width: 0px;
   overflow: hidden;
   margin-right: 10px;
   transition: width 0.6s ease-in-out; }
   .collapsible-nav.show {
-    width: 350px; }
+    width: 320px; }
   @media (max-width: 991px) {
     .collapsible-nav {
       position: fixed;
@@ -7603,7 +7604,7 @@ margin: 0 auto;
       flex-direction: column; } }
 
 aside {
-  padding-right: 57px;
+  padding-right: 40px;
   min-width: 300px; }
   @media (max-width: 767px) {
     aside {
@@ -7622,7 +7623,7 @@ main {
       padding-left: 20px;
       padding-right: 20px; } }
   main .section-title {
-    font-size: 23px;
+    font-size: 20px;
     line-height: 1;
     font-weight: 700;
     text-transform: uppercase;
@@ -7639,7 +7640,7 @@ main {
     line-height: 1;
     color: #0067f6; }
   main p {
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.538;
     font-weight: 300; }
   main .resume-section {
@@ -7686,18 +7687,18 @@ main {
         border-radius: 2px;
         margin-bottom: 8px; }
       main .time-line-item-title {
-        font-size: 22px;
+        font-size: 16px;
         font-weight: 700;
         line-height: 1;
         margin-bottom: 2px; }
       main .time-line-item-subtitle {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 500;
         line-height: 1.6;
         color: #a7a7a7;
         margin-bottom: 3px; }
       main .time-line-item-content {
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 300;
         line-height: 1.6;
         margin-bottom: 0; }
@@ -7940,13 +7941,178 @@ main .achievements-section {
     height: 45px;
     margin-right: 10px; }
   main .achievement-card-title {
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 700;
     margin-bottom: 0;
     line-height: 1; }
   main .achievement-card-description {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 0;
     color: #070707; }
+    main .blog-section {
+    margin-bottom: 51px; }
+  main .blog-posts-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 4rem;}
+    main .blog-posts-wrapper .blog-post {
+      width: calc(25% - 15px);
+      margin-bottom: 100px; }
+      @media (max-width: 1200px) {
+        main .blog-posts-wrapper .blog-post {
+          width: calc(50% - 8.5px); } }
+      @media (max-width: 575px) {
+        main .blog-posts-wrapper .blog-post {
+          width: 100%; } }
+      main .blog-posts-wrapper .blog-post-link {
+        color: inherit; }
+        main .blog-posts-wrapper .blog-post-link:hover {
+          text-decoration: none; }
+      main .blog-posts-wrapper .blog-post-thumbnail {
+        width: 100%;
+        margin-bottom: 13px; }
+      main .blog-posts-wrapper .blog-post-title {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1;
+        margin-bottom: 6px; }
+      main .blog-posts-wrapper .blog-post-meta {
+        color: #0067f6;
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.2;
+        margin-bottom: 0; }
+        main .blog-posts-wrapper .blog-post-meta .post-published-date {
+          margin-right: 6px; }
+main .skills-section {
+    margin-bottom: 34px; }
+  main .skill-card {
+    padding-top: 11px;
+    padding-bottom: 11px; }
+    main .skill-card:first-child, main .skill-card:nth-child(3) {
+      border-right: 1px solid #f3f3f3; }
+      @media (max-width: 991px) {
+        main .skill-card:first-child, main .skill-card:nth-child(3) {
+          border-right: 0; } }
+    @media (max-width: 991px) {
+      main .skill-card {
+        border-bottom: 1px solid #f3f3f3; }
+        main .skill-card:last-child {
+          border-bottom: 0; } }
+    main .skill-card .skill-icon {
+      width: 29.9px;
+      height: 29.9px;
+      margin-right: 25px;
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center; }
+    main .skill-card .skill-title {
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 1;
+      margin-bottom: 8px; }
+    main .skill-card .skill-description {
+      font-size: 13px;
+      font-weight: 300;
+      max-width: 500px;
+      margin-bottom: 0; }
+    main .skill-card .skill-description a {
+    color: black;}
+main .contact-section {
+    margin-bottom: 31px; }
+    main .contact-section p {
+      font-size: 16px; }
+  main .contact-cards-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    justify-content: space-between; }
+  main .contact-card {
+    border: 1px solid #f3f3f3;
+    padding: 25px 30px 20px;
+    margin-bottom: 28px;
+    width: calc(50% - 12.5px); }
+    @media (max-width: 991px) {
+      main .contact-card {
+        width: 100%; } }
+    @media (max-width: 767px) {
+      main .contact-card {
+        width: calc(50% - 12.5px); } }
+    @media (max-width: 575px) {
+      main .contact-card {
+        width: 100%; } }
+    main .contact-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0; }
+    main .contact-card-content {
+      font-size: 12px;
+      line-height: 1.83;
+      margin-bottom: 0; }
+  main .contact-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; }
+    main .contact-form .form-group {
+      margin-bottom: 21px;
+      width: 100%;
+      padding: 0; }
+      main .contact-form .form-group-name, main .contact-form .form-group-email {
+        width: calc(50% - 12.5px); }
+        @media (max-width: 991px) {
+          main .contact-form .form-group-name, main .contact-form .form-group-email {
+            width: 100%; } }
+        @media (max-width: 767px) {
+          main .contact-form .form-group-name, main .contact-form .form-group-email {
+            width: calc(50% - 12.5px); } }
+        @media (max-width: 575px) {
+          main .contact-form .form-group-name, main .contact-form .form-group-email {
+            width: 100%; } }
+    main .contact-form .form-control {
+      border: 0;
+      border-radius: 0;
+      background-color: #f3f3f3;
+      padding: 12px 14px;
+      color: #000000;
+      font-size: 12px;
+      line-height: 1.5;
+      min-height: 36px; }
+    main .contact-form .form-submit-btn {
+      border-radius: 0;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 10px 29px; }
+  main .location-section {
+    margin-bottom: 66px; }
+    main .location-section .section-title {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.9;
+      margin-bottom: 14px;}
+    main .location-section .map-wrapper {
+      height: 150px; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0; }
+
+.sr-only-focusable:active, .sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal; }

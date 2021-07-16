@@ -1,35 +1,30 @@
 # Quick links
 
 - [Quick links](#quick-links)
-- [This is my first real personal website](#this-is-my-first-real-personal-website)
 - [Technologies used](#technologies-used)
-    - [[fe]](#fe)
-    - [[be]](#be)
-- [Technical things](#technical-things)
+    - [Frontend](((#F)))
+    - [Backend](((#B)))
 - [Notes](#notes)
+- [Disclaimer](#disclaimer)
 
 
-# This is my first real personal website
+# This is my first live personal website
 
-It's been a great journey developing this website as i got chance to learn new things like CSP (content security policy) headers and meta tags, XSS (cross site scripting) security stuffs, iframe attacks etc. I really believe this knoweldge will definetly help me a lot in future.
+It's been a great journey developing this website as i got chance to learn new things like CSP (content security policy) headers, meta tags, XSS (cross site scripting) security stuffs, iframe attacks, compression techniques, various web performance metrics and techniques to improve the performance, handling hot linking situations, ranking in search resulta, various schemas like schema.org, OG, sitemaps etc.
 
 # Technologies used
 
-In frontend and backend, these technologies has been used:
+These technologies were used:
 
-### [fe]
+### [F]
 
 1) HTML, CSS (obviously 🤷🏻‍♂️)
-
 2) [Bootstrap](https://getbootstrap.com/)
    * powering the bare bone structure of the website
 3) [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
    * Making things functional like share button, menu buttons etc
-4) [Jquery](https://jquery.com/)
-   * Simplifies some javascript things.
 
-
-### [be]
+### [B]
 
 5) [CPython3.8](https://www.python.org/downloads/release/python-385/)
    * humans know and speaks it 😉 .
@@ -40,14 +35,15 @@ In frontend and backend, these technologies has been used:
    * asynchronous sqlite querying.
 8) [Jinja2](https://pypi.org/project/Jinja2/)
    * A really handy html template engine
-
-# Technical things
-
-When this website is configured to run to it's full potential (by setting the workers to max a processor allows), it is capable of handling many thousands of requests per second.
-
-I have an `Intel 9th gen i7 9750H 6 core 12 logical cores` processor which allows a max of `12 workers`. Running the website `locally` with `workers set to 12`, it was able to handle approximately `4500+` requests per second 🤯. Shocking right! All thanks to the [Sanic web framework](http://sanicframework.org/en/). My server allows only one worker (single core), so, it's capable of handling approximately 1000 requests per second.
-
+9) [Ubuntu 20.04](https://releases.ubuntu.com/20.04/)
+   * The usual
 
 # Notes
 
-Template of this website has been used from [here](https://www.bootstrapdash.com/product/free-bootstrap-resume/) and i modified most of it to my taste and needs, made it functional, really usable. Template comes under CC BY 3.0 (Creative Commons Attribution) License.
+When this website is configured to run to it's full potential (by setting the workers to max a processor allows), it is capable of handling many thousands of requests per second.
+
+I have an `Intel 9th gen i7 9750H 6 core 12 logical cores` processor which allows a max of `12 workers`. Running the website `locally` with `workers set to 12`, it was able to handle approximately `4500+` requests per second 🤯. Shocking right! All thanks to the [Sanic web framework](http://sanicframework.org/en/). My server allows only one worker (single core), so, it's capable of handling approximately 100 requests per second.
+
+# Disclaimer
+
+Template of this website was borrowed from [here](https://www.bootstrapdash.com/product/free-bootstrap-resume/). I have modified most of it to my taste and needs, made it functional, really usable, improving its performancce by 40 to 60%, reducing size and keeping the overall visual structure same. Template comes under CC BY 3.0 (Creative Commons Attribution) License.

@@ -7,7 +7,7 @@ from jinja2 import Environment, FileSystemLoader
 from sanic import Sanic, html, HTTPResponse
 from sanic.response import file, empty, file_stream
 
-from paths import paths, minify, domain, www_domain, only_domain
+from paths import paths, minify, domain, www_domain, only_domain, only_www_domain
 from utils.contact_form import add_contact
 
 html_paths = paths['html']
@@ -18,7 +18,7 @@ vid_file_names = tuple(*[files for (_, _, files) in os.walk('./static/videos/')]
 
 async def authentic_domain(request):
     host = request.headers.get('host', '')
-    return host == only_domain or host == www_domain
+    return host == only_domain or host == only_www_domain
 
 
 async def css(body, headers=None):

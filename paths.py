@@ -1,7 +1,8 @@
 minify = '/min/'
 only_domain = '192.168.73.227:8000'
+only_www_domain = 'www.' + only_domain
 domain = 'http://' + only_domain
-www_domain = 'http://www.' + only_domain
+www_domain = "http://" + only_www_domain
 
 paths = {
     "html": {

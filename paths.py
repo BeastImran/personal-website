@@ -1,5 +1,5 @@
 minify = '/min/'
-only_domain = '192.168.0.103:8000'
+only_domain = '192.168.73.227:8000'
 domain = 'http://' + only_domain
 www_domain = 'http://www.' + only_domain
 

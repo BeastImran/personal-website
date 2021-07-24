@@ -18,7 +18,7 @@ vid_file_names = tuple(*[files for (_, _, files) in os.walk('./static/videos/')]
 
 async def authentic_domain(request):
     host = request.headers.get('host', '')
-    return host == '' or (host == only_domain or host == www_domain)
+    return host == only_domain or host == www_domain
 
 
 async def css(body, headers=None):
@@ -62,7 +62,7 @@ app.config.update_config({"REQUEST_MAX_SIZE": 9000})
 
 @app.get(f"/static/documents/{minify[1:]}<doc_file_name:path>")
 async def serve_resume(_, doc_file_name):
-    if doc_file_name == "Shaik-Imran's-Resume.pdf":
+    if doc_file_name == "Shaik_Imran's_Resume.pdf":
         return await file('./static/documents/' + doc_file_name)
     return empty(status=404)
 
@@ -207,4 +207,4 @@ async def robots_txt(_):
 
 
 if __name__ == '__main__':
-    app.run(host="192.168.0.103", access_log=False, debug=False, workers=1)
+    app.run(host="192.168.73.227", access_log=False, debug=False, workers=1)

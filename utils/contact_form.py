@@ -7,7 +7,6 @@ from time import time
 from aiosqlite import connect
 
 db_path = Path(expanduser('~/db/contacts.sqlite3'))
-print("db path=", db_path)
 email_regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
 
 
